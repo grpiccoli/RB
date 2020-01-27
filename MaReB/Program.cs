@@ -1,37 +1,42 @@
-﻿using Microsoft.AspNetCore;
+﻿using MaReB.Data;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using System;
+using Z.EntityFramework.Extensions;
 
 namespace MaReB
 {
-    public static class Program
+    public class Program
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
-            //using (var scope = host.Services.CreateScope())
-            //{
-            //    var services = scope.ServiceProvider;
-            //    var context = services.GetRequiredService<ApplicationDbContext>();
-            //    EntityFrameworkManager.ContextFactory = _context => { return context; };
+            var host = CreateWebHostBuilder(args).Build();
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var context = services.GetRequiredService<ApplicationDbContext>();
+                EntityFrameworkManager.ContextFactory = _context => { return context; };
 
-            //    //try
-            //    //{
-            //        CountriesInitializer.Initialize(context);
-            //        LocationsInitializer.Initialize(context);
-            //    var env = services.GetRequiredService<IHostingEnvironment>();
-            //    ArrivalsInitializer.Initialize(context, env.ContentRootPath);
-            //        ExportsInitializer.Initialize(context);
-            //        StationsInitializer.Initialize(context);
-            //        PuertosInitializer.Initialize(context);
-            //        ProcedenciasInitializer.Initialize(context);
-            //    //}
-            //    //catch (Exception ex)
-            //    //{
-            //    //    var logger = services.GetRequiredService<ILogger<Program>>();
-            //    //    logger.LogError(ex, "An error occurred while seeding the database.");
-            //    //}
-            //}
-            //host.Run();
+                try
+                {
+                    CountriesInitializer.Initialize(context);
+                    LocationsInitializer.Initialize(context);
+                    var env = services.GetRequiredService<IHostingEnvironment>();
+                    ArrivalsInitializer.Initialize(context, env.ContentRootPath);
+                    ExportsInitializer.Initialize(context);
+                    StationsInitializer.Initialize(context);
+                    PuertosInitializer.Initialize(context);
+                    ProcedenciasInitializer.Initialize(context);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred while seeding the database.");
+                }
+            }
+            host.Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
