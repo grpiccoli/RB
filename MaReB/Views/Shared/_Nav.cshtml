@@ -1,0 +1,68 @@
+﻿<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+            <button role="button"
+                    class="navbar-brand dropdown-toggle btn btn-dark nav-link"
+                    data-toggle="dropdown"
+                    id="brand"
+                    aria-haspopup="true"
+                    aria-expanded="false">
+                <img src="~/images/waves-just-circle.min.png" alt="bibliomit gray icon" class="img-responsive" width="30" style="float:left;" hspace="4" />
+                MaReB
+            </button>
+            <div class="dropdown-menu" aria-labelledby="brand">
+                <div class="dropdown-header">Económica:</div>
+                <a class="dropdown-item" asp-area="" asp-controller="Exports" asp-action="Summary">Resumen de Exportaciones</a>
+                <a class="dropdown-item" asp-area="" asp-controller="Regions" asp-action="Map">Mapa Chile</a>
+                <a class="dropdown-item" asp-area="" asp-controller="Countries" asp-action="Map">Mapa Mundial</a>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-header">Biológica Pesquera:</div>
+                <a class="dropdown-item" asp-area="" asp-controller="Arrivals" asp-action="Map">Capturas</a>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-header">Ambiental:</div>
+                <a class="dropdown-item" asp-area="" asp-controller="Stations" asp-action="Map">Estaciones</a>
+                @*<li class="dropdown-header">Sociocultural:</li>
+        <li class="btn-default"><a asp-area="" asp-controller="Home" asp-action="Index">Mundo</a></li>*@
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-header">Modelo Unificado:</div>
+                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Modelo">Simulación dinámica</a>
+                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Indicadores">Indicadores</a>
+            </div>
+        </li>
+    </ul>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarApps" aria-controls="navbarApps" aria-expanded="false"
+            aria-label="Ver herramientas">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse" id="navbarApps">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="navbar-brand dropdown-toggle" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-cog"></i> Administraci&oacute;n<span class="caret"></span></a>
+                    <ul class="dropdown-menu hover">
+                        <li class="dropdown-header">Bases de Datos:</li>
+                        <li><a asp-area="" asp-controller="Continents" asp-action="Index">Continentes</a></li>
+                        <li><a asp-area="" asp-controller="Countries" asp-action="Index">Paises</a></li>
+                        <li><a asp-area="" asp-controller="Regions" asp-action="Index">Regiones</a></li>
+                        <li><a asp-area="" asp-controller="Provincias" asp-action="Index">Provincias</a></li>
+                        <li><a asp-area="" asp-controller="Comunas" asp-action="Index">Comunas</a></li>
+                        <li><a asp-area="" asp-controller="Exports" asp-action="Index">Exportaciones</a></li>
+                        <li><a asp-area="" asp-controller="Arrivals" asp-action="Index">Desembarques</a></li>
+                        <li><a asp-area="" asp-controller="Stations" asp-action="Index">Estaciones</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Administraci&oacute;n de usuarios:</li>
+                        <li><a asp-area="" asp-controller="User" asp-action="Index">Usuarios y Permisos</a></li>
+                        <li><a asp-area="" asp-controller="ApplicationRole" asp-action="Index">Roles</a></li>
+                    </ul>
+                </li>
+            </ul>
+        }
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link btn btn-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link btn btn-dark" asp-area="" asp-controller="Home" asp-action="About">Nosotros</a></li>
+            <li class="nav-item"><a class="nav-link btn btn-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contacto</a></li>
+        </ul>
+        <partial name="_LoginPartial" />
+    </div>
+</nav>

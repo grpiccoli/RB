@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "test",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "message": "Self-intersection" }, "geometry": { "type": "Point", "coordinates": [ -73.564146, -42.054741 ] } },
+{ "type": "Feature", "properties": { "message": "Self-intersection" }, "geometry": { "type": "Point", "coordinates": [ -74.14759, -42.453232 ] } }
+]
+}

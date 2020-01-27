@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Estaciones de Muestreo";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<dd>
+    <div id="map" style="height: 450px;"></div>
+</dd>
+
+@section Scripts {
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkBD_nY7LaeVohfyIt-M2a2BuIhuy-51c&language=es&region=CL"></script>
+            <script>
+                window.onload = function initMap() {
+                    $.getJSON("/Stations/MapData", function getData(data) {
+                        var infowindow = new google.maps.InfoWindow({
+                            size: new google.maps.Size(150, 50)
+                        });
+                        var bounds = new google.maps.LatLngBounds();
+                        $.each(data, function (i, dato) {
+                            bounds.extend(dato.position);
+                        });
+                        var map = new google.maps.Map(document.getElementById('map'), {
+                            mapTypeId: 'terrain'
+                        });
+                        map.fitBounds(bounds);
+                        map.setCenter(bounds.getCenter());
+                        var markers = [];
+                        $.each(data, function (i, dato) {
+                            marker = new google.maps.Marker({
+                                position: dato.position,
+                                title: "Estación " + dato.name + " " + dato.id,
+                            });
+                            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                                return function () {
+                                    infowindow.setContent('<div id="content">' +
+                                        '<div id="siteNotice">' +
+                                        '</div>' +
+                                        '<h2 id="firstHeading" class="firstHeading" style="margin-bottom:0px">' +
+                                        '<h4>Estación ' + dato.name + '</h4>' +
+                                        '<h4>Código ' + dato.id + '</h4>' +
+                                        '<div id="bodyContent">' +
+                                        '<p><b>Área : ' + dato.area + '</b></p>' +
+                                        '<a href="/Stations/Details/' + dato.id + '">Detalles</a>' +
+                                        '<p align="right">Fuentes: <a target="_blank" href="http://www.sernapesca.cl"><img src="../images/ico/sernapesca.svg" width="100" /></a>' +
+                                        '<text> | </text><a target="_blank" href="http://www.subpesca.cl"><img src="../images/ico/subpesca.svg" width="100" /></a>.</p>' +
+                                        '</div>' +
+                                        '</div>');
+                                    infowindow.open(map, marker);
+                                    map.setCenter(marker.getPosition());
+                                }
+                            })(marker, i));
+                            markers.push(marker);
+                        });
+                        var markerCluster = new MarkerClusterer(map, markers, { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' });
+                    });
+                }
+            </script>
+}

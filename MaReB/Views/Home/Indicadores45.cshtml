@@ -1,0 +1,353 @@
+﻿
+@{
+    ViewData["Title"] = "Indicadores";
+}
+
+<partial name="_Libs" model='new List<string> { "chart.min.css", "indicators.min.css", "jqueryui", "indicadores45.min.js" }' />
+
+@*<h3 class="text-center w-100">Pesquería de Almeja en la Comuna de Quellón</h3>*@
+
+<!-- HTML -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h3 class="text-center">Indicador Global</h3>
+            <div id="PROM" class="main"></div>
+        </div>
+        <div class="col">
+            <div id="POLAR" style="width:100%;height:250px;"></div>
+        </div>
+        <div class="col">
+            <div class="row" style="padding-left:5rem;">
+                <div id="YR-slider">
+                    <div id="YR-handle" class="ui-slider-handle"></div>
+                </div>
+            </div>
+            <div id="CHART" class="main"></div>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col">
+            <div class="row">
+                <button class="btn btn-outline-warning w-100" role="button" onclick="control('EC');">Economica</button>
+                <div id="EC" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="EC-value" type="hidden" />
+                <div id="EC-slider" class="gslider islider">
+                    <div id="EC-handle" class="ui-slider-handle ihandler"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <button class="btn btn-outline-success w-100" role="button" onclick="control('AM');">Ambiental</button>
+                <div id="AM" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="AM-value" type="hidden" />
+                <div id="AM-slider" class="gslider islider">
+                    <div id="AM-handle" class="ui-slider-handle ihandler"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <button class="btn btn-outline-primary w-100" role="button" onclick="control('BP');">Biopesquera</button>
+                <div id="BP" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="BP-value" type="hidden" />
+                <div id="BP-slider" class="gslider islider">
+                    <div id="BP-handle" class="ui-slider-handle ihandler"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <button class="w-100 btn btn-outline-danger" role="button" onclick="control('SC');">Sociocultural</button>
+                <div id="SC" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="SC-value" type="hidden" />
+                <div id="SC-slider" class="gslider islider">
+                    <div id="SC-handle" class="ui-slider-handle ihandler"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <button class="w-100 btn btn-outline-secondary" role="button" onclick="control('IN');">Institucional</button>
+                <div id="IN" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="IN-value" type="hidden" />
+                <div id="IN-slider" class="gslider islider">
+                    <div id="IN-handle" class="ui-slider-handle ihandler"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ECpanel" class="row panel d-none">
+        @*<h4 class="text-center w-100">Ponderadores Variables Dimensión <span class="text-warning">Económica</span></h4>*@
+        <div class="col">
+            <div class="row">
+                <h4 class="text-center text-warning w-100">Rend. Cong.</h4>
+                <div id="EC0" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="EC0-value" type="hidden" />
+                <div id="EC0-slider" class="ecslider islider">
+                    <div id="EC0-handle" class="ui-slider-handle echandler"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <h4 class="text-center text-warning w-100">Tasa Congelado</h4>
+                <div id="EC1" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="EC1-value" type="hidden" />
+                <div id="EC1-slider" class="ecslider islider">
+                    <div id="EC1-handle" class="ui-slider-handle echandler"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <h4 class="text-center text-warning w-100">Precio</h4>
+                <div id="EC2" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="EC2-value" type="hidden" />
+                <div id="EC2-slider" class="ecslider islider">
+                    <div id="EC2-handle" class="ui-slider-handle echandler"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <h4 class="text-center text-warning w-100">Tasa Precios</h4>
+                <div id="EC3" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="EC3-value" type="hidden" />
+                <div id="EC3-slider" class="ecslider islider">
+                    <div id="EC3-handle" class="ui-slider-handle echandler"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <h4 class="text-center text-warning w-100">Cons. Fresco</h4>
+                <div id="EC4" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="EC4-value" type="hidden" />
+                <div id="EC4-slider" class="ecslider islider">
+                    <div id="EC4-handle" class="ui-slider-handle echandler"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="AMpanel" class="row panel d-none">
+        @*<h4 class="text-center w-100">Ponderadores Variables Dimensión <span class="text-success">Ambiental</span></h4>*@
+        <div class="col">
+            <div class="row">
+                <h4 class="text-center text-success w-100">Diversidad</h4>
+                <div id="AM0" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="AM0-value" type="hidden" />
+                <div id="AM0-slider" class="amslider islider">
+                    <div id="AM0-handle" class="ui-slider-handle amhandler"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <h4 class="text-center text-success w-100">Alimento</h4>
+                <div id="AM1" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="AM1-value" type="hidden" />
+                <div id="AM1-slider" class="amslider islider">
+                    <div id="AM1-handle" class="ui-slider-handle amhandler"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <h4 class="text-center text-success w-100">Marea Roja</h4>
+                <div id="AM2" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="AM2-value" type="hidden" />
+                <div id="AM2-slider" class="amslider islider">
+                    <div id="AM2-handle" class="ui-slider-handle amhandler"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <h4 class="text-center text-success w-100">Temperatura</h4>
+                <div id="AM3" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="AM3-value" type="hidden" />
+                <div id="AM3-slider" class="amslider islider">
+                    <div id="AM3-handle" class="ui-slider-handle amhandler"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="BPpanel" class="row panel d-none">
+        @*<h4 class="text-center w-100">Ponderadores Variables Dimensión <span class="text-primary">Biopesquera</span></h4>*@
+        <div class="col">
+            <div class="row">
+                <h4 class="text-center text-primary w-100">Bajo Talla</h4>
+                <div id="BP0" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="BP0-value" type="hidden" />
+                <div id="BP0-slider" class="bpslider islider">
+                    <div id="BP0-handle" class="ui-slider-handle bphandler"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <h4 class="text-center text-primary w-100">Megadesovantes</h4>
+                <div id="BP1" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="BP1-value" type="hidden" />
+                <div id="BP1-slider" class="bpslider islider">
+                    <div id="BP1-handle" class="ui-slider-handle bphandler"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <h4 class="text-center text-primary w-100">Captura</h4>
+                <div id="BP2" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="BP2-value" type="hidden" />
+                <div id="BP2-slider" class="bpslider islider">
+                    <div id="BP2-handle" class="ui-slider-handle bphandler"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <h4 class="text-center text-primary w-100">Esfuerzo</h4>
+                <div id="BP3" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="BP3-value" type="hidden" />
+                <div id="BP3-slider" class="bpslider islider">
+                    <div id="BP3-handle" class="ui-slider-handle bphandler"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <h4 class="text-center text-primary w-100">Rend. Captura</h4>
+                <div id="BP4" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="BP4-value" type="hidden" />
+                <div id="BP4-slider" class="bpslider islider">
+                    <div id="BP4-handle" class="ui-slider-handle bphandler"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="SCpanel" class="row panel d-none">
+        @*<h4 class="text-center w-100">Ponderadores Variables Dimensión <span class="text-danger">Sociocultural</span></h4>*@
+        <div class="col">
+            <div class="row">
+                <h4 class="text-center text-danger w-100">Ilegalidad</h4>
+                <div id="SC0" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="SC0-value" type="hidden" />
+                <div id="SC0-slider" class="scslider islider">
+                    <div id="SC0-handle" class="ui-slider-handle schandler"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <h4 class="text-center text-danger w-100">Empleo</h4>
+                <div id="SC1" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="SC1-value" type="hidden" />
+                <div id="SC1-slider" class="scslider islider">
+                    <div id="SC1-handle" class="ui-slider-handle schandler"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <h4 class="text-center text-danger w-100">Ingresos</h4>
+                <div id="SC2" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="SC2-value" type="hidden" />
+                <div id="SC2-slider" class="scslider islider">
+                    <div id="SC2-handle" class="ui-slider-handle schandler"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="INpanel" class="row panel d-none">
+        @*<h4 class="text-center w-100">Ponderadores Variables Dimensión <span class="text-muted">Institucional</span></h4>*@
+        <div class="col">
+            <div class="row">
+                <h4 class="text-center text-muted w-100">Comunicación</h4>
+                <div id="IN0" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="IN0-value" type="hidden" />
+                <div id="IN0-slider" class="inslider islider">
+                    <div id="IN0-handle" class="ui-slider-handle inhandler"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <h4 class="text-center text-muted w-100">Participación</h4>
+                <div id="IN1" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="IN1-value" type="hidden" />
+                <div id="IN1-slider" class="inslider islider">
+                    <div id="IN1-handle" class="ui-slider-handle inhandler"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <h4 class="text-center text-muted w-100">Administración</h4>
+                <div id="IN2" class="chart"></div>
+            </div>
+            <div class="row">
+                <input id="IN2-value" type="hidden" />
+                <div id="IN2-slider" class="inslider islider">
+                    <div id="IN2-handle" class="ui-slider-handle inhandler"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Resources -->
+@section PreScripts{
+    <script src="https://www.amcharts.com/lib/4/core.js"></script>
+    <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+}

@@ -1,0 +1,19 @@
+﻿.jumbotron {
+    background-color: lightblue;
+}
+
+.btn-info {
+    color: black;
+    font: bold;
+}
+
+.fill {
+    height: 225px;
+    background-position: center center;
+}
+
+.btn-info {
+    color: lightblue;
+    background-color: #3276b1;
+    border-color: #285e8e;
+}

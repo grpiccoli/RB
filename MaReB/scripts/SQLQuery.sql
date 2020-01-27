@@ -1,0 +1,53 @@
+﻿--SELECT * FROM Country WHERE ISO2 = 'ES'
+--SELECT SUM(FOB) FROM Export WHERE Species = 0 and CountryId = 724
+SELECT SUM(Kg) FROM Export WHERE Species = 1 AND Year(Date) = 2015
+--SELECT DISTINCT PSMBId FROM EnsayoFitos
+--SELECT * FROM Centre WHERE Id = 103438
+--SELECT COUNT(*) FROM Planilla
+--DELETE FROM Planilla
+--DELETE FROM Entries
+--DELETE FROM Origen
+--DELETE EnsayoFitos
+--DELETE Phytoplanktons
+--SELECT COUNT(*) FROM EnsayoFitos
+--SELECT MIN(FechaMuestreo) FROM EnsayoFitos
+--SELECT * FROM EnsayoFitos
+--DECLARE @Produccion INT;
+--INSERT INTO @Produccion SELECT Id FROM Excel WHERE Name = 'Producción'
+--INSERT INTO Columna(Name, ExcelId, Description, Operation)
+--VALUES ('TipoItemProduccion', @Produccion, 'Tipo Item', '')
+--DELETE FROM Planilla WHERE Data = 4
+--DELETE FROM Planilla WHERE Data = 0
+--SELECT ProductionType, CASE WHEN ProductionType = 4 THEN 0 ELSE ProductionType END AS ProductionType FROM Planilla
+--SELECT COUNT(*) FROM Planilla WHERE Dato = 4 AND YEAR(Fecha) = '2017' 
+--DELETE FROM EnsayoFitos
+/*INSERT INTO Planta(Id, CompanyId, ComunaId, Certificable)
+VALUES (13099, 76453440, 13116, 0);*/
+--SELECT COUNT(Id) FROM Planilla WHERE Dato = 0 GROUP BY TipoProduccion
+--Fecha >= Convert(datetime, '2018-03-01') AND Dato = 4
+--DELETE FROM Planilla WHERE Fecha >= Convert(datetime, '2018-01-01') AND Dato = 2
+--SELECT SUM(Peso) FROM Planilla WHERE Dato = 4 AND Fecha >= Convert(datetime, '2018-01-01') AND Fecha < Convert(datetime, '2018-04-01')
+--DELETE FROM Entries WHERE Id = 35
+--SELECT * FROM Planilla WHERE Dato = 3 AND Fecha >= Convert(datetime, '2018-09-01')
+--SELECT * FROM Phytoplanktons WHERE Species LIKE '%Alexandrium%' OR Species LIKE '%Dinophysis%'
+--SELECT EnsayoFitos.FechaMuestreo,
+--EnsayoFitos.Temperatura,
+--EnsayoFitos.Ph,
+--EnsayoFitos.Oxigeno,
+--EnsayoFitos.Salinidad,
+--Comuna.Name,
+--Phytoplanktons.Species,
+--Phytoplanktons.C
+--FROM EnsayoFitos
+--INNER JOIN PSMB ON EnsayoFitos.PSMBId = PSMB.Id 
+--INNER JOIN Comuna ON PSMB.ComunaId = Comuna.Id 
+--INNER JOIN Phytoplanktons ON EnsayoFitos.Id = Phytoplanktons.EnsayoFitoId
+--WHERE PSMB.ComunaId IN (10102,10101,10202,10201,10203,10204,10205,10206,10207,10208,10209,10210) AND 
+--(Phytoplanktons.Species LIKE '%Alexandrium%' OR Phytoplanktons.Species LIKE '%Dinophysis%')
+--Dato = 5 AND Fecha >= Convert(datetime, '2018-06-01')
+--SELECT Id, Ph FROM EnsayoFitos WHERE Ph IS NOT NULL ORDER BY Ph DESC
+--UPDATE EnsayoFitos
+--SET Ph = '7.77' WHERE Id = 291401
+--UPDATE EnsayoFitos
+--SET Ph = '7.73' WHERE Id = 296511
+--UPDATE Excel SET Name = 'Producción' WHERE Id = 3

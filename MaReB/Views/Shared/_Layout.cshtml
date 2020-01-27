@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MaReB</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-46146363-6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-46146363-6');
+    </script>
+    <meta name="author" content="Guillermo Rodríguez Piccoli" />
+    <open-graph-website site-name="MaReB"
+                        title="@ViewData["Title"]"
+                        main-image="@(new OpenGraphImage(
+    new Uri($"{Context.Request.Scheme}://{Context.Request.Host}/android-chrome-512x512.png"),
+        "image/png",
+        1200,
+        630))"
+                        determiner="@OpenGraphDeterminer.Blank" />
+    <script type="application/ld+json">
+        @{
+            var website = new WebSite()
+            {
+                AlternateName = "Base de Datos para Manejo de Recursos Bentónicos de Chile (MaReB).",
+                Name = "MaReB - " + (string)ViewData["Title"],
+                Url = new Uri($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")
+            };
+            var jsonLd = website.ToString();
+        }
+        @Html.Raw(jsonLd)
+    </script>
+    @Html.Raw(new TwitterCardSummaryLargeImage
+{
+    Title = "MaReB",
+    Description = "Base de Datos para Manejo de Recursos Bentónicos de Chile (MaReB).",
+    CreatorUsername = "@guille_arp",
+    SiteUsername = "@guille_arp"
+})
+    <partial name="_Favicons" />
+    <partial name="_LO_Libs" model='new List<string> { "jquery", "popper.js", "bootstrap", "fontawesome-free", "site.min.css", "site.min.js" }' />
+    @this.LO_WriteStyleBlocks()
+    @this.WriteStyleBlocks()
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <header>
+        <div class="fixed-top">
+            <partial name="_Nav" />
+            @RenderSection("NavBar", required: false)
+        </div>
+        <partial name="_CookieConsentPartial" />
+    </header>
+    <main class="container-fluid body-content">
+        @RenderBody()
+        <hr style="margin:5px;" />
+    </main>
+    <footer class="container">
+        <div class="row justify-content-end">
+            <div class="col">
+                <a target="_blank" href="https://www.epicsolutions.cl">
+                    <img src="~/images/epic_light_hor.svg" alt="epic solutions" class="img-responsive" height="20" />
+                </a>
+            </div>
+            <div class="col">
+                <p class="text-right">
+                    &copy; 2018 - MaReB
+                </p>
+            </div>
+        </div>
+    </footer>
+    @this.LO_WriteScriptBlocks()
+    @RenderSection("PreScripts", required: false)
+    @this.WriteScriptBlocks()
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

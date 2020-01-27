@@ -1,0 +1,104 @@
+﻿#PROM {
+    height: 200px;
+}
+
+#CHART {
+    height: 250px;
+}
+
+.islider {
+    width: 80%;
+}
+
+#YR-slider {
+    width: 83%;
+}
+
+.ui-slider-handle {
+    text-align: center;
+    width: 43px !important;
+    height: 23px !important;
+}
+
+#EC-slider .ui-slider-range,
+#EC0-slider .ui-slider-range,
+#EC1-slider .ui-slider-range,
+#EC2-slider .ui-slider-range,
+#EC3-slider .ui-slider-range,
+#EC4-slider .ui-slider-range
+{
+    background: yellow;
+}
+
+#EC-slider .ui-slider-handle,
+#EC0-slider .ui-slider-handle,
+#EC1-slider .ui-slider-handle,
+#EC2-slider .ui-slider-handle,
+#EC3-slider .ui-slider-handle,
+#EC4-slider .ui-slider-handle
+{
+    border-color: yellow;
+}
+
+#AM-slider .ui-slider-range,
+#AM0-slider .ui-slider-range,
+#AM1-slider .ui-slider-range,
+#AM2-slider .ui-slider-range,
+#AM3-slider .ui-slider-range
+{
+    background: green;
+}
+
+#AM-slider .ui-slider-handle,
+#AM0-slider .ui-slider-handle,
+#AM1-slider .ui-slider-handle,
+#AM2-slider .ui-slider-handle,
+#AM3-slider .ui-slider-handle {
+    border-color: green;
+}
+
+#BP-slider .ui-slider-range,
+#BP0-slider .ui-slider-range,
+#BP1-slider .ui-slider-range,
+#BP2-slider .ui-slider-range,
+#BP3-slider .ui-slider-range,
+#BP4-slider .ui-slider-range {
+    background: blue;
+}
+
+#BP-slider .ui-slider-handle,
+#BP0-slider .ui-slider-handle,
+#BP1-slider .ui-slider-handle,
+#BP2-slider .ui-slider-handle,
+#BP3-slider .ui-slider-handle,
+#BP4-slider .ui-slider-handle {
+    border-color: blue;
+}
+
+#SC-slider .ui-slider-range,
+#SC0-slider .ui-slider-range,
+#SC1-slider .ui-slider-range,
+#SC2-slider .ui-slider-range {
+    background: red;
+}
+
+#SC-slider .ui-slider-handle,
+#SC0-slider .ui-slider-handle,
+#SC1-slider .ui-slider-handle,
+#SC2-slider .ui-slider-handle {
+    border-color: red;
+}
+
+#IN-slider .ui-slider-range,
+#IN0-slider .ui-slider-range,
+#IN1-slider .ui-slider-range,
+#IN2-slider .ui-slider-range {
+    background: grey;
+}
+
+#IN-slider .ui-slider-handle,
+#IN0-slider .ui-slider-handle,
+#IN1-slider .ui-slider-handle,
+#IN2-slider .ui-slider-handle {
+    border-color: grey;
+}

@@ -1,0 +1,146 @@
+﻿@{
+    ViewData["Title"] = "MaReB";
+}
+
+<partial name="_Libs" model='new List<string> { "home.min.css" }' />
+
+<div class="jumbotron m-0 p-3 mt-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6 align-middle">
+                <table>
+                    <tr>
+                        <td valign="middle" style="min-width:60px;">
+                            <a href="@Url.Action("Contact", "Home", null, null)" target="_blank">
+                                <img src="~/images/waves-just-circle.min.png" alt="MaReB" class="img-responsive pr-3" style="max-height:80px;" />
+                            </a>
+                        </td>
+                        <td valign="middle">
+                            <h1 class="display-4 align-middle">
+                                MaReB
+                            </h1>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="">
+                    <a href="//www.conicyt.cl/fondef" target="_blank">
+                        <img src="~/images/fondef.min.png" alt="fondef" class="img-responsive" style="max-height:100px;float:right;" />
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <p class="lead mt-0 text-justify">
+                <b>
+                    Base de Datos para Manejo de Recursos Bent&oacute;nicos de Chile (MaReB).
+                </b>
+            </p>
+            <blockquote class="blockquote text-justify">
+                <p class="mb-0 small">
+                    Herramienta <strong><a target="_blank" href="//www.capia.cl/">CAPIA</a></strong>,
+                    financiado por <strong><a target="_blank" href="//www.conicyt.cl/fondef">FONDEF</a></strong>.
+                    Proyecto IT15I10028 "Modelo de manejo integral para la sustentabilidad de las pesquerías bentónicas de la zona sur de Chile: 1.- Pesquería de almeja (Venus antiqua)".
+                </p>
+            </blockquote>
+        </div>
+    </div>
+</div>
+
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleControls" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleControls" data-slide-to="1"></li>
+        <li data-target="#carouselExampleControls" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="d-block w-100 fill" style="background-image:url('/images/venus.min.jpg');"></div>
+            <div class="carousel-caption d-none d-md-block">
+                <a class="btn btn-info" href="@Url.Action("Summary", "Exports", null, null)">
+                    <h5> Recurso Almeja </h5>
+                </a>
+                <p class="text-info">
+                    <strong>
+                        Bases de datos del recurso bentónico <i>Venus Antiqua</i>.
+                    </strong>
+                </p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="d-block w-100 fill" style="background-image:url('/images/Gigartina.min.jpg');"></div>
+            <div class="carousel-caption d-none d-md-block">
+                <a class="btn btn-info" href="@Url.Action("Summary", "Exports", null, null)">
+                    <h5> Recurso Luga Roja </h5>
+                </a>
+                <p class="text-info">
+                    <strong>
+                        Bases de datos del recurso bentónico <i>Gigartina skottsbergii</i>.
+                    </strong>
+                </p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="d-block w-100 fill" style="background-image:url('/images/Loxechinus_albus.min.jpg');"></div>
+            <div class="carousel-caption d-none d-md-block">
+                <a class="btn btn-info" href="@Url.Action("Summary", "Exports", null, null)">
+                    <h5> Recurso Erizo </h5>
+                </a>
+                <p class="text-info">
+                    <strong>
+                        Base de datos del recurso <i>Loxechinus albus</i>.
+                    </strong>
+                </p>
+            </div>
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+@*<ol class="carousel-indicators" style="border-color:green">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+</ol>*@
+
+<div class="row">
+    <div class="col-12 col-md-3">
+        <p>
+            <a class="btn btn-info btn-block"
+               href="@Url.Action("Summary", "Exports", null, null)">
+                Base de Datos Econ&oacute;mica &raquo;
+            </a>
+        </p>
+        <p class="mb-0 text-justify">
+            Base de datos dinámica
+            de las exportaciones de recursos bentónicos de Chile.
+        </p>
+    </div>
+    <div class="col-12 col-md-3">
+        <p><a class="btn btn-info btn-block" href="@Url.Action("Map", "Stations", null, null)">Base de Datos Oceanográfica &raquo;</a></p>
+        <p class="text-justify">
+            Base de datos dinámica
+            de los &iacute;ndices oceanogr&aacute;ficos Chile.
+        </p>
+    </div>
+    <div class="col-12 col-md-3">
+        <p><a class="btn btn-info btn-block" href="@Url.Action("Map", "Arrivals", null, null)">Base de Datos Pesquer&iacute;a &raquo;</a></p>
+        <p class="text-justify">
+            Base de datos de actividad Pesquer&iacute;a en Chile.
+        </p>
+    </div>
+    <div class="col-12 col-md-3">
+        <p><a class="btn btn-info btn-block" href="@Url.Action("Modelo", "Home", null, null)">Base de datos Sociocultural &raquo;</a></p>
+        <p class="text-justify">
+            Base de datos de contexto Sociocultural Chileno.
+        </p>
+    </div>
+</div>

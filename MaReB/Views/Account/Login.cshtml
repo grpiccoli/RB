@@ -1,0 +1,120 @@
+﻿@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Authentication
+@model LoginViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    ViewData["Title"] = "Iniciar Sesión";
+}
+
+<h2>@ViewData["Title"]</h2>
+<div class="row">
+    <div class="col-md-4">
+        <section>
+            <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                <h4>Inicia sesión usando tu cuenta MaReb.</h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="RememberMe">
+                            <input asp-for="RememberMe" />
+                            @Html.DisplayNameFor(m => m.RememberMe)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default">Ingresar</button>
+                </div>
+                <div class="form-group">
+                    <p>
+                        <a asp-action="ForgotPassword">¿Olvidaste tu contraseña?</a>
+                    </p>
+                    @*<p>
+                        <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
+                    </p>*@
+                </div>
+            </form>
+        </section>
+    </div>
+    @*<div class="col-md-6 col-md-offset-2">
+        <section>
+            <h4>Ingresa o Registrate autom&aacute;ticamente con:</h4>
+            <hr />
+            @{
+        var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+        if (loginProviders.Count == 0)
+        {
+            <div>
+                <p>
+                    Error en los servicios externos configurados. Por favor contacte al administrador del sitio.
+                </p>
+            </div>
+}
+else
+{
+        <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+            <div>
+                <p style="margin-bottom:20px">
+                    @foreach (var provider in loginProviders)
+            {
+                var src = "/images/" + provider.Name + ".svg";
+                @if (provider.Name == "Google")
+        {
+            <button type="submit" id="@provider.Name"
+                    class="btn-group-justified btn btn-default text-left text-primary primary-btn col-xs-11"
+                    name="provider" value="@provider.Name"
+                    title="Iniciar sesión usando tu cuenta @provider.Name"
+                    style="text-align:left; color:#ffffff; background-color:#dc4d40; margin-bottom: 5px;">
+                <img width="45" height="45" src="@src" hspace="20" />
+                <strong>Iniciar sesi&oacute;n con @provider.Name</strong>
+            </button>
+}
+else if (provider.Name == "LinkedIn")
+{
+        <button type="submit" id="@provider.Name"
+                class="btn-group-justified btn btn-default text-left text-primary primary-btn col-xs-11"
+                name="provider" value="@provider.Name"
+                title="Iniciar sesión usando tu cuenta @provider.Name"
+                style="text-align:left; color:#ffffff; background-color:#0274b3; margin-bottom: 5px;">
+            <img width="45" height="45" src="@src" hspace="20" />
+            <strong>Iniciar sesi&oacute;n con @provider.Name</strong>
+        </button>
+}
+else
+{
+        <button type="submit" id="@provider.Name"
+                class="btn-group-justified btn btn-default text-left text-primary primary-btn col-xs-11"
+                name="provider" value="@provider.Name"
+                title="Iniciar sesión usando tu cuenta @provider.Name"
+                style="text-align:left; margin-bottom: 5px;">
+            <img width="45" height="45" src="@src" hspace="20" />
+            <strong>Iniciar sesi&oacute;n con @provider.Name</strong>
+        </button>
+}
+
+    }
+                </p>
+            </div>
+        </form>
+}
+            }
+        </section>
+    </div>*@
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
