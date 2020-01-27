@@ -8,6 +8,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20190123205305_Initial.cs" />
     <Compile Remove="Migrations\20190123205305_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190124030928_Initial.cs" />
+    <Compile Remove="Migrations\20190124030928_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +21,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
+    <PackageReference Include="Pluralize.NET.Core" Version="1.0.0" />
     <PackageReference Include="Schema.NET" Version="7.0.1" />
     <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="2.7.38" />
   </ItemGroup>

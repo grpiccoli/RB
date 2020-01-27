@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MaReB.Models
 {
-    public class Provincia
+    public class Province
     {
         [Display(Name = "Código de Provincia")]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -20,7 +20,7 @@ namespace MaReB.Models
         [Display(Name = "Población")]
         public int Population { get; set; }
 
-        public ICollection<Comuna> Comunas { get; set; }
+        public ICollection<Commune> Communes { get; set; }
         public ICollection<Coordinate> Coordinates { get; set; }
     }
 }

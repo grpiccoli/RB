@@ -24,7 +24,7 @@ namespace MaReB.Controllers
         // GET: Continents
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Continent.ToListAsync());
+            return View(await _context.Continents.ToListAsync());
         }
 
         // GET: Continents/Details/5
@@ -35,7 +35,7 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var continent = await _context.Continent
+            var continent = await _context.Continents
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (continent == null)
             {
@@ -75,7 +75,7 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var continent = await _context.Continent.SingleOrDefaultAsync(m => m.Id == id);
+            var continent = await _context.Continents.SingleOrDefaultAsync(m => m.Id == id);
             if (continent == null)
             {
                 return NotFound();
@@ -126,7 +126,7 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var continent = await _context.Continent
+            var continent = await _context.Continents
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (continent == null)
             {
@@ -141,15 +141,15 @@ namespace MaReB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var continent = await _context.Continent.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Continent.Remove(continent);
+            var continent = await _context.Continents.SingleOrDefaultAsync(m => m.Id == id);
+            _context.Continents.Remove(continent);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ContinentExists(int id)
         {
-            return _context.Continent.Any(e => e.Id == id);
+            return _context.Continents.Any(e => e.Id == id);
         }
     }
 }

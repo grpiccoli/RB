@@ -24,7 +24,7 @@ namespace MaReB.Controllers
         // GET: Coordinates
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Coordinate.Include(c => c.Comuna).Include(c => c.Provincia).Include(c => c.Region);
+            var applicationDbContext = _context.Coordinates.Include(c => c.Commune).Include(c => c.Province).Include(c => c.Region);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -36,9 +36,9 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var coordinate = await _context.Coordinate
-                .Include(c => c.Comuna)
-                .Include(c => c.Provincia)
+            var coordinate = await _context.Coordinates
+                .Include(c => c.Commune)
+                .Include(c => c.Province)
                 .Include(c => c.Region)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (coordinate == null)
@@ -52,8 +52,8 @@ namespace MaReB.Controllers
         // GET: Coordinates/Create
         public IActionResult Create()
         {
-            ViewData["ComunaId"] = new SelectList(_context.Set<Comuna>(), "Id", "Id");
-            ViewData["ProvinciaId"] = new SelectList(_context.Set<Provincia>(), "Id", "Id");
+            ViewData["CommuneId"] = new SelectList(_context.Set<Commune>(), "Id", "Id");
+            ViewData["Province"] = new SelectList(_context.Set<Province>(), "Id", "Id");
             ViewData["RegionId"] = new SelectList(_context.Set<Region>(), "Id", "Id");
             return View();
         }
@@ -63,7 +63,7 @@ namespace MaReB.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ComunaId,ProvinciaId,RegionId,CountryId,Latitude,Longitude,Vertex")] Coordinate coordinate)
+        public async Task<IActionResult> Create([Bind("Id,CommuneId,ProvinceId,RegionId,CountryId,Latitude,Longitude,Vertex")] Coordinate coordinate)
         {
             if (ModelState.IsValid)
             {
@@ -71,8 +71,8 @@ namespace MaReB.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ComunaId"] = new SelectList(_context.Set<Comuna>(), "Id", "Id", coordinate.ComunaId);
-            ViewData["ProvinciaId"] = new SelectList(_context.Set<Provincia>(), "Id", "Id", coordinate.ProvinciaId);
+            ViewData["CommuneId"] = new SelectList(_context.Set<Commune>(), "Id", "Id", coordinate.CommuneId);
+            ViewData["ProvinceId"] = new SelectList(_context.Set<Province>(), "Id", "Id", coordinate.ProvinceId);
             ViewData["RegionId"] = new SelectList(_context.Set<Region>(), "Id", "Id", coordinate.RegionId);
             return View(coordinate);
         }
@@ -85,13 +85,13 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var coordinate = await _context.Coordinate.SingleOrDefaultAsync(m => m.Id == id);
+            var coordinate = await _context.Coordinates.SingleOrDefaultAsync(m => m.Id == id);
             if (coordinate == null)
             {
                 return NotFound();
             }
-            ViewData["ComunaId"] = new SelectList(_context.Set<Comuna>(), "Id", "Id", coordinate.ComunaId);
-            ViewData["ProvinciaId"] = new SelectList(_context.Set<Provincia>(), "Id", "Id", coordinate.ProvinciaId);
+            ViewData["CommuneId"] = new SelectList(_context.Set<Commune>(), "Id", "Id", coordinate.CommuneId);
+            ViewData["ProvinceId"] = new SelectList(_context.Set<Province>(), "Id", "Id", coordinate.ProvinceId);
             ViewData["RegionId"] = new SelectList(_context.Set<Region>(), "Id", "Id", coordinate.RegionId);
             return View(coordinate);
         }
@@ -101,7 +101,7 @@ namespace MaReB.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ComunaId,ProvinciaId,RegionId,CountryId,Latitude,Longitude,Vertex")] Coordinate coordinate)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CommuneId,ProvinceId,RegionId,CountryId,Latitude,Longitude,Vertex")] Coordinate coordinate)
         {
             if (id != coordinate.Id)
             {
@@ -128,8 +128,8 @@ namespace MaReB.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ComunaId"] = new SelectList(_context.Set<Comuna>(), "Id", "Id", coordinate.ComunaId);
-            ViewData["ProvinciaId"] = new SelectList(_context.Set<Provincia>(), "Id", "Id", coordinate.ProvinciaId);
+            ViewData["CommuneId"] = new SelectList(_context.Set<Commune>(), "Id", "Id", coordinate.CommuneId);
+            ViewData["ProvinceId"] = new SelectList(_context.Set<Province>(), "Id", "Id", coordinate.ProvinceId);
             ViewData["RegionId"] = new SelectList(_context.Set<Region>(), "Id", "Id", coordinate.RegionId);
             return View(coordinate);
         }
@@ -142,9 +142,9 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var coordinate = await _context.Coordinate
-                .Include(c => c.Comuna)
-                .Include(c => c.Provincia)
+            var coordinate = await _context.Coordinates
+                .Include(c => c.Commune)
+                .Include(c => c.Province)
                 .Include(c => c.Region)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (coordinate == null)
@@ -160,15 +160,15 @@ namespace MaReB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var coordinate = await _context.Coordinate.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Coordinate.Remove(coordinate);
+            var coordinate = await _context.Coordinates.SingleOrDefaultAsync(m => m.Id == id);
+            _context.Coordinates.Remove(coordinate);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CoordinateExists(int id)
         {
-            return _context.Coordinate.Any(e => e.Id == id);
+            return _context.Coordinates.Any(e => e.Id == id);
         }
     }
 }

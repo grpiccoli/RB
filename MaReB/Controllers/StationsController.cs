@@ -22,7 +22,7 @@ namespace MaReB.Controllers
         // GET: Stations
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Station.Include(s => s.Region);
+            var applicationDbContext = _context.Stations.Include(s => s.Region);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -30,7 +30,7 @@ namespace MaReB.Controllers
         // GET: Arrivals
         public IActionResult MapData()
         {
-            var applicationDbContext = _context.Station
+            var applicationDbContext = _context.Stations
                 .Include(a => a.Coordinates)
                 .Where(c => c.Coordinates.Count() > 0)
                 .Select(c => new
@@ -63,7 +63,7 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var station = await _context.Station
+            var station = await _context.Stations
                 .Include(s => s.Region)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (station == null)
@@ -77,7 +77,7 @@ namespace MaReB.Controllers
         // GET: Stations/Create
         public IActionResult Create()
         {
-            ViewData["RegionId"] = new SelectList(_context.Region, "Id", "Id");
+            ViewData["RegionId"] = new SelectList(_context.Regions, "Id", "Id");
             return View();
         }
 
@@ -94,7 +94,7 @@ namespace MaReB.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RegionId"] = new SelectList(_context.Region, "Id", "Id", station.RegionId);
+            ViewData["RegionId"] = new SelectList(_context.Regions, "Id", "Id", station.RegionId);
             return View(station);
         }
 
@@ -106,12 +106,12 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var station = await _context.Station.SingleOrDefaultAsync(m => m.Id == id);
+            var station = await _context.Stations.SingleOrDefaultAsync(m => m.Id == id);
             if (station == null)
             {
                 return NotFound();
             }
-            ViewData["RegionId"] = new SelectList(_context.Region, "Id", "Id", station.RegionId);
+            ViewData["RegionId"] = new SelectList(_context.Regions, "Id", "Id", station.RegionId);
             return View(station);
         }
 
@@ -147,7 +147,7 @@ namespace MaReB.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RegionId"] = new SelectList(_context.Region, "Id", "Id", station.RegionId);
+            ViewData["RegionId"] = new SelectList(_context.Regions, "Id", "Id", station.RegionId);
             return View(station);
         }
 
@@ -159,7 +159,7 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var station = await _context.Station
+            var station = await _context.Stations
                 .Include(s => s.Region)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (station == null)
@@ -175,15 +175,15 @@ namespace MaReB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var station = await _context.Station.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Station.Remove(station);
+            var station = await _context.Stations.SingleOrDefaultAsync(m => m.Id == id);
+            _context.Stations.Remove(station);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool StationExists(string id)
         {
-            return _context.Station.Any(e => e.Id == id);
+            return _context.Stations.Any(e => e.Id == id);
         }
     }
 }

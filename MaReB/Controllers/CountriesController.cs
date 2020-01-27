@@ -25,7 +25,7 @@ namespace MaReB.Controllers
         // GET: Countries
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Country;
+            var applicationDbContext = _context.Countries;
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -40,7 +40,7 @@ namespace MaReB.Controllers
         // GET: Regions
         public IActionResult Continents(bool p)
         {
-            var data = from Continent c in _context.Continent
+            var data = from Continent c in _context.Continents
                        .Where(c => c.Id != 0 && c.Id != 6255152)
                        let a = p ? c.Countries.Sum(t => t.Exports
                     .Where(e => e.Species == Species.Almeja)
@@ -79,7 +79,7 @@ namespace MaReB.Controllers
         public IActionResult Images(int id)
         {
             var sp = (Species)id;
-            var images = from Country c in _context.Country
+            var images = from Country c in _context.Countries
                         where c.Exports.Any(e => e.Species == sp)
                         select new
                         {
@@ -95,7 +95,7 @@ namespace MaReB.Controllers
         public IActionResult Lines(int id)
         {
             var sp = (Species)id;
-            var lines = from Country c in _context.Country
+            var lines = from Country c in _context.Countries
                        where c.Exports.Any(e => e.Species == sp)
                        select new
                        {
@@ -124,7 +124,7 @@ namespace MaReB.Controllers
         public IActionResult Data(int id, bool p)
         {
             var sp = (Species)id;
-            var data = from Country c in _context.Country
+            var data = from Country c in _context.Countries
                        where c.Exports.Any(e => e.Species == sp)
                        let v = p ? c.Exports
                     .Where(e => e.Species == sp)
@@ -147,7 +147,7 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var country = await _context.Country
+            var country = await _context.Countries
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (country == null)
             {
@@ -187,7 +187,7 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var country = await _context.Country.SingleOrDefaultAsync(m => m.Id == id);
+            var country = await _context.Countries.SingleOrDefaultAsync(m => m.Id == id);
             if (country == null)
             {
                 return NotFound();
@@ -238,7 +238,7 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var country = await _context.Country
+            var country = await _context.Countries
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (country == null)
             {
@@ -253,15 +253,15 @@ namespace MaReB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var country = await _context.Country.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Country.Remove(country);
+            var country = await _context.Countries.SingleOrDefaultAsync(m => m.Id == id);
+            _context.Countries.Remove(country);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CountryExists(int id)
         {
-            return _context.Country.Any(e => e.Id == id);
+            return _context.Countries.Any(e => e.Id == id);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace MaReB.Controllers
         // GET: Comunas
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Comuna.Include(c => c.Provincia);
+            var applicationDbContext = _context.Communes.Include(c => c.Province);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -36,21 +36,21 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var comuna = await _context.Comuna
-                .Include(c => c.Provincia)
+            var commune = await _context.Communes
+                .Include(c => c.Province)
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (comuna == null)
+            if (commune == null)
             {
                 return NotFound();
             }
 
-            return View(comuna);
+            return View(commune);
         }
 
         // GET: Comunas/Create
         public IActionResult Create()
         {
-            ViewData["ProvinciaId"] = new SelectList(_context.Provincia, "Id", "Id");
+            ViewData["ProvinceId"] = new SelectList(_context.Provinces, "Id", "Id");
             return View();
         }
 
@@ -59,16 +59,16 @@ namespace MaReB.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ProvinciaId,Name,DE,CS")] Comuna comuna)
+        public async Task<IActionResult> Create([Bind("Id,ProvinceId,Name,DE,CS")] Commune commune)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(comuna);
+                _context.Add(commune);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProvinciaId"] = new SelectList(_context.Provincia, "Id", "Id", comuna.ProvinciaId);
-            return View(comuna);
+            ViewData["ProvinceId"] = new SelectList(_context.Provinces, "Id", "Id", commune.ProvinceId);
+            return View(commune);
         }
 
         // GET: Comunas/Edit/5
@@ -79,13 +79,13 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var comuna = await _context.Comuna.SingleOrDefaultAsync(m => m.Id == id);
-            if (comuna == null)
+            var commune = await _context.Communes.SingleOrDefaultAsync(m => m.Id == id);
+            if (commune == null)
             {
                 return NotFound();
             }
-            ViewData["ProvinciaId"] = new SelectList(_context.Provincia, "Id", "Id", comuna.ProvinciaId);
-            return View(comuna);
+            ViewData["ProvinceId"] = new SelectList(_context.Provinces, "Id", "Id", commune.ProvinceId);
+            return View(commune);
         }
 
         // POST: Comunas/Edit/5
@@ -93,9 +93,9 @@ namespace MaReB.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ProvinciaId,Name,DE,CS")] Comuna comuna)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ProvinceId,Name,DE,CS")] Commune commune)
         {
-            if (id != comuna.Id)
+            if (id != commune.Id)
             {
                 return NotFound();
             }
@@ -104,12 +104,12 @@ namespace MaReB.Controllers
             {
                 try
                 {
-                    _context.Update(comuna);
+                    _context.Update(commune);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ComunaExists(comuna.Id))
+                    if (!ComunaExists(commune.Id))
                     {
                         return NotFound();
                     }
@@ -120,8 +120,8 @@ namespace MaReB.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProvinciaId"] = new SelectList(_context.Provincia, "Id", "Id", comuna.ProvinciaId);
-            return View(comuna);
+            ViewData["ProvinceId"] = new SelectList(_context.Provinces, "Id", "Id", commune.ProvinceId);
+            return View(commune);
         }
 
         // GET: Comunas/Delete/5
@@ -132,15 +132,15 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var comuna = await _context.Comuna
-                .Include(c => c.Provincia)
+            var commune = await _context.Communes
+                .Include(c => c.Province)
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (comuna == null)
+            if (commune == null)
             {
                 return NotFound();
             }
 
-            return View(comuna);
+            return View(commune);
         }
 
         // POST: Comunas/Delete/5
@@ -148,15 +148,15 @@ namespace MaReB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var comuna = await _context.Comuna.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Comuna.Remove(comuna);
+            var commune = await _context.Communes.SingleOrDefaultAsync(m => m.Id == id);
+            _context.Communes.Remove(commune);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ComunaExists(int id)
         {
-            return _context.Comuna.Any(e => e.Id == id);
+            return _context.Communes.Any(e => e.Id == id);
         }
     }
 }

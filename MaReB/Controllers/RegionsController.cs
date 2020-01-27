@@ -24,7 +24,7 @@ namespace MaReB.Controllers
         // GET: Regions
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Region.ToListAsync());
+            return View(await _context.Regions.ToListAsync());
         }
 
         [AllowAnonymous]
@@ -32,7 +32,7 @@ namespace MaReB.Controllers
         public IActionResult Data(int id)
         {
             var sp = (Species)id;
-            var data = _context.Region
+            var data = _context.Regions
                 .Where(r => r.Id != 0 && r.Exports.Any(e => e.Species == sp))
                 .Select(r => 
                 new
@@ -57,7 +57,7 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var region = await _context.Region
+            var region = await _context.Regions
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (region == null)
             {
@@ -97,7 +97,7 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var region = await _context.Region.SingleOrDefaultAsync(m => m.Id == id);
+            var region = await _context.Regions.SingleOrDefaultAsync(m => m.Id == id);
             if (region == null)
             {
                 return NotFound();
@@ -148,7 +148,7 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var region = await _context.Region
+            var region = await _context.Regions
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (region == null)
             {
@@ -163,15 +163,15 @@ namespace MaReB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var region = await _context.Region.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Region.Remove(region);
+            var region = await _context.Regions.SingleOrDefaultAsync(m => m.Id == id);
+            _context.Regions.Remove(region);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool RegionExists(int id)
         {
-            return _context.Region.Any(e => e.Id == id);
+            return _context.Regions.Any(e => e.Id == id);
         }
     }
 }

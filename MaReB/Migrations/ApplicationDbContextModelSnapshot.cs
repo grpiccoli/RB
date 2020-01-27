@@ -15,7 +15,7 @@ namespace MaReB.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -112,7 +112,7 @@ namespace MaReB.Migrations
 
                     b.Property<string>("Caleta");
 
-                    b.Property<int>("ComunaId");
+                    b.Property<int>("CommuneId");
 
                     b.Property<DateTime>("Date");
 
@@ -122,12 +122,12 @@ namespace MaReB.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ComunaId");
+                    b.HasIndex("CommuneId");
 
-                    b.ToTable("Arrival");
+                    b.ToTable("Arrivals");
                 });
 
-            modelBuilder.Entity("MaReB.Models.Captura", b =>
+            modelBuilder.Entity("MaReB.Models.Capture", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -145,26 +145,26 @@ namespace MaReB.Migrations
 
                     b.Property<int>("N_Buzos");
 
+                    b.Property<int>("OriginId");
+
+                    b.Property<int?>("OriginId1");
+
+                    b.Property<int>("PortId");
+
                     b.Property<int>("Precio");
-
-                    b.Property<int>("ProcedenciaId");
-
-                    b.Property<int?>("ProcedenciaId1");
-
-                    b.Property<int>("PuertoId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProcedenciaId");
+                    b.HasIndex("OriginId");
 
-                    b.HasIndex("ProcedenciaId1");
+                    b.HasIndex("OriginId1");
 
-                    b.HasIndex("PuertoId");
+                    b.HasIndex("PortId");
 
-                    b.ToTable("Capturas");
+                    b.ToTable("Captures");
                 });
 
-            modelBuilder.Entity("MaReB.Models.Comuna", b =>
+            modelBuilder.Entity("MaReB.Models.Commune", b =>
                 {
                     b.Property<int>("Id");
 
@@ -174,13 +174,13 @@ namespace MaReB.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("ProvinciaId");
+                    b.Property<int>("ProvinceId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProvinciaId");
+                    b.HasIndex("ProvinceId");
 
-                    b.ToTable("Comuna");
+                    b.ToTable("Communes");
                 });
 
             modelBuilder.Entity("MaReB.Models.Continent", b =>
@@ -197,7 +197,7 @@ namespace MaReB.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Continent");
+                    b.ToTable("Continents");
                 });
 
             modelBuilder.Entity("MaReB.Models.Coordinate", b =>
@@ -206,7 +206,7 @@ namespace MaReB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ComunaId");
+                    b.Property<int?>("CommuneId");
 
                     b.Property<int?>("CountryId");
 
@@ -214,9 +214,9 @@ namespace MaReB.Migrations
 
                     b.Property<double>("Longitude");
 
-                    b.Property<int?>("ProcedenciaId");
+                    b.Property<int?>("OriginId");
 
-                    b.Property<int?>("ProvinciaId");
+                    b.Property<int?>("ProvinceId");
 
                     b.Property<int?>("RegionId");
 
@@ -226,21 +226,21 @@ namespace MaReB.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ComunaId");
+                    b.HasIndex("CommuneId");
 
                     b.HasIndex("CountryId");
 
-                    b.HasIndex("ProcedenciaId")
+                    b.HasIndex("OriginId")
                         .IsUnique()
-                        .HasFilter("[ProcedenciaId] IS NOT NULL");
+                        .HasFilter("[OriginId] IS NOT NULL");
 
-                    b.HasIndex("ProvinciaId");
+                    b.HasIndex("ProvinceId");
 
                     b.HasIndex("RegionId");
 
                     b.HasIndex("StationId");
 
-                    b.ToTable("Coordinate");
+                    b.ToTable("Coordinates");
                 });
 
             modelBuilder.Entity("MaReB.Models.Country", b =>
@@ -265,7 +265,7 @@ namespace MaReB.Migrations
 
                     b.HasIndex("ContinentId");
 
-                    b.ToTable("Country");
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("MaReB.Models.Export", b =>
@@ -294,10 +294,10 @@ namespace MaReB.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("Export");
+                    b.ToTable("Exports");
                 });
 
-            modelBuilder.Entity("MaReB.Models.Procedencia", b =>
+            modelBuilder.Entity("MaReB.Models.Origin", b =>
                 {
                     b.Property<int>("Id");
 
@@ -311,10 +311,25 @@ namespace MaReB.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("Procedencias");
+                    b.ToTable("Origins");
                 });
 
-            modelBuilder.Entity("MaReB.Models.Provincia", b =>
+            modelBuilder.Entity("MaReB.Models.Port", b =>
+                {
+                    b.Property<int>("Id");
+
+                    b.Property<int>("CommuneId");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommuneId");
+
+                    b.ToTable("Ports");
+                });
+
+            modelBuilder.Entity("MaReB.Models.Province", b =>
                 {
                     b.Property<int>("Id");
 
@@ -330,22 +345,7 @@ namespace MaReB.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("Provincia");
-                });
-
-            modelBuilder.Entity("MaReB.Models.Puerto", b =>
-                {
-                    b.Property<int>("Id");
-
-                    b.Property<int>("ComunaId");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ComunaId");
-
-                    b.ToTable("Puertos");
+                    b.ToTable("Provinces");
                 });
 
             modelBuilder.Entity("MaReB.Models.Region", b =>
@@ -364,7 +364,7 @@ namespace MaReB.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Region");
+                    b.ToTable("Regions");
                 });
 
             modelBuilder.Entity("MaReB.Models.Station", b =>
@@ -381,7 +381,7 @@ namespace MaReB.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("Station");
+                    b.ToTable("Stations");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -479,65 +479,65 @@ namespace MaReB.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("MaReB.Models.AppUserRole", b =>
+            modelBuilder.Entity("MaReB.Models.ApplicationUserRole", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<string>");
 
                     b.Property<string>("RoleAssigner");
 
-                    b.HasDiscriminator().HasValue("AppUserRole");
+                    b.HasDiscriminator().HasValue("ApplicationUserRole");
                 });
 
             modelBuilder.Entity("MaReB.Models.Arrival", b =>
                 {
-                    b.HasOne("MaReB.Models.Comuna", "Comuna")
+                    b.HasOne("MaReB.Models.Commune", "Commune")
                         .WithMany("Arrivals")
-                        .HasForeignKey("ComunaId")
+                        .HasForeignKey("CommuneId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("MaReB.Models.Captura", b =>
+            modelBuilder.Entity("MaReB.Models.Capture", b =>
                 {
-                    b.HasOne("MaReB.Models.Procedencia")
-                        .WithMany("Capturas")
-                        .HasForeignKey("ProcedenciaId")
+                    b.HasOne("MaReB.Models.Origin")
+                        .WithMany("Captures")
+                        .HasForeignKey("OriginId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("MaReB.Models.Procedencia", "Procedencia")
+                    b.HasOne("MaReB.Models.Origin", "Origin")
                         .WithMany()
-                        .HasForeignKey("ProcedenciaId1");
+                        .HasForeignKey("OriginId1");
 
-                    b.HasOne("MaReB.Models.Puerto", "Puerto")
+                    b.HasOne("MaReB.Models.Port", "Port")
                         .WithMany()
-                        .HasForeignKey("PuertoId")
+                        .HasForeignKey("PortId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("MaReB.Models.Comuna", b =>
+            modelBuilder.Entity("MaReB.Models.Commune", b =>
                 {
-                    b.HasOne("MaReB.Models.Provincia", "Provincia")
-                        .WithMany("Comunas")
-                        .HasForeignKey("ProvinciaId")
+                    b.HasOne("MaReB.Models.Province", "Province")
+                        .WithMany("Communes")
+                        .HasForeignKey("ProvinceId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MaReB.Models.Coordinate", b =>
                 {
-                    b.HasOne("MaReB.Models.Comuna", "Comuna")
+                    b.HasOne("MaReB.Models.Commune", "Commune")
                         .WithMany("Coordinates")
-                        .HasForeignKey("ComunaId");
+                        .HasForeignKey("CommuneId");
 
                     b.HasOne("MaReB.Models.Country", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId");
 
-                    b.HasOne("MaReB.Models.Procedencia", "Procedencia")
+                    b.HasOne("MaReB.Models.Origin", "Origin")
                         .WithOne("Coordinate")
-                        .HasForeignKey("MaReB.Models.Coordinate", "ProcedenciaId");
+                        .HasForeignKey("MaReB.Models.Coordinate", "OriginId");
 
-                    b.HasOne("MaReB.Models.Provincia", "Provincia")
+                    b.HasOne("MaReB.Models.Province", "Province")
                         .WithMany("Coordinates")
-                        .HasForeignKey("ProvinciaId");
+                        .HasForeignKey("ProvinceId");
 
                     b.HasOne("MaReB.Models.Region", "Region")
                         .WithMany("Coordinates")
@@ -569,7 +569,7 @@ namespace MaReB.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("MaReB.Models.Procedencia", b =>
+            modelBuilder.Entity("MaReB.Models.Origin", b =>
                 {
                     b.HasOne("MaReB.Models.Region", "Region")
                         .WithMany()
@@ -577,19 +577,19 @@ namespace MaReB.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("MaReB.Models.Provincia", b =>
+            modelBuilder.Entity("MaReB.Models.Port", b =>
                 {
-                    b.HasOne("MaReB.Models.Region", "Region")
-                        .WithMany("Provincias")
-                        .HasForeignKey("RegionId")
+                    b.HasOne("MaReB.Models.Commune", "Commune")
+                        .WithMany("Ports")
+                        .HasForeignKey("CommuneId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("MaReB.Models.Puerto", b =>
+            modelBuilder.Entity("MaReB.Models.Province", b =>
                 {
-                    b.HasOne("MaReB.Models.Comuna", "Comuna")
-                        .WithMany("Puertos")
-                        .HasForeignKey("ComunaId")
+                    b.HasOne("MaReB.Models.Region", "Region")
+                        .WithMany("Provinces")
+                        .HasForeignKey("RegionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

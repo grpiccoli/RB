@@ -4,15 +4,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MaReB.Models
 {
-    public class Comuna
+    public class Commune
     {
         [Display(Name = "Código de Comuna")]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
         //Parent
-        public int ProvinciaId { get; set; }
-        public virtual Provincia Provincia { get; set; }
+        public int ProvinceId { get; set; }
+        public virtual Province Province { get; set; }
 
         //ATt
         [Display(Name = "Nombre de Comuna")]
@@ -27,6 +27,6 @@ namespace MaReB.Models
         //Childs
         public ICollection<Coordinate> Coordinates { get; set; }
         public ICollection<Arrival> Arrivals { get; set; }
-        public ICollection<Puerto> Puertos { get; set; }
+        public ICollection<Port> Ports { get; set; }
     }
 }

@@ -1,10 +1,10 @@
 ﻿@model MaReB.Models.Export
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles";
 }
 
-<h2>Details</h2>
+<h2>@ViewData["Title"]</h2>
 
 <div>
     <h4>Export</h4>
@@ -44,13 +44,13 @@
             @Html.DisplayNameFor(model => model.Country)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Country.Id)
+            @Html.DisplayFor(model => model.CountryId)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Region)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Region.Id)
+            @Html.DisplayFor(model => model.RegionId)
         </dd>
     </dl>
 </div>

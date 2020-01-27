@@ -2,7 +2,7 @@
 
 namespace MaReB.Models
 {
-    public class AppUserRole : IdentityUserRole<string>
+    public class ApplicationUserRole : IdentityUserRole<string>
     {
         public string RoleAssigner { get; set; }
     }

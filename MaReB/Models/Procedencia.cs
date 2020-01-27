@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MaReB.Models
 {
-    public class Procedencia
+    public class Origin
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
@@ -17,6 +17,6 @@ namespace MaReB.Models
 
         public virtual Coordinate Coordinate { get; set; }
 
-        public virtual ICollection<Captura> Capturas { get; set; }
+        public virtual ICollection<Capture> Captures { get; set; }
     }
 }

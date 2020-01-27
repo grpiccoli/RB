@@ -1,24 +1,22 @@
-﻿using System;
-
-namespace MaReB.Models
+﻿namespace MaReB.Models
 {
     public class Coordinate
     {
         //Ids
         public int Id { get; set; }
-        public int? ComunaId { get; set; }
-        public int? ProvinciaId { get; set; }
+        public int? CommuneId { get; set; }
+        public int? ProvinceId { get; set; }
         public int? RegionId { get; set; }
         public int? CountryId { get; set; }
-        public int? ProcedenciaId { get; set; }
+        public int? OriginId { get; set; }
         public string StationId { get; set; }
         //Parents
-        public virtual Comuna Comuna { get; set; }
-        public virtual Provincia Provincia { get; set; }
+        public virtual Commune Commune { get; set; }
+        public virtual Province Province { get; set; }
         public virtual Region Region { get; set; }
         public virtual Country Country { get; set; }
         public virtual Station Station { get; set; }
-        public virtual Procedencia Procedencia { get; set; }
+        public virtual Origin Origin { get; set; }
         //ATT
         public double Latitude { get; set; }
         public double Longitude { get; set; }

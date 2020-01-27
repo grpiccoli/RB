@@ -2,14 +2,14 @@
 
 namespace MaReB.Models
 {
-    public class Captura
+    public class Capture
     {
         public int Id { get; set; }
 
         public DateTime Fecha { get; set; }
 
-        public int ProcedenciaId { get; set; }
-        public virtual Procedencia Procedencia { get; set; }
+        public int OriginId { get; set; }
+        public virtual Origin Origin { get; set; }
 
         public int Precio { get; set; }
 
@@ -19,8 +19,8 @@ namespace MaReB.Models
 
         public int EmbarcacionId { get; set; }
 
-        public int PuertoId { get; set; }
-        public virtual Puerto Puerto { get; set; }
+        public int PortId { get; set; }
+        public virtual Port Port { get; set; }
 
         public int Cantidad { get; set; }
 

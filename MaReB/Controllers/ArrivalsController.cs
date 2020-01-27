@@ -25,7 +25,7 @@ namespace MaReB.Controllers
         // GET: Arrivals
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Arrival.Include(a => a.Comuna);
+            var applicationDbContext = _context.Arrivals.Include(a => a.Commune);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -33,10 +33,10 @@ namespace MaReB.Controllers
         public IActionResult Data()
         {
             var sp = (Species)0;
-            var data = _context.Arrival
-                .Include(a => a.Comuna)
+            var data = _context.Arrivals
+                .Include(a => a.Commune)
                 .Where(a => a.Species == sp)
-                .GroupBy(a => a.Comuna)
+                .GroupBy(a => a.Commune)
                 .Select(g =>
                 new
                 {
@@ -62,8 +62,8 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var arrival = await _context.Arrival
-                .Include(a => a.Comuna)
+            var arrival = await _context.Arrivals
+                .Include(a => a.Commune)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (arrival == null)
             {
@@ -76,7 +76,7 @@ namespace MaReB.Controllers
         // GET: Arrivals/Create
         public IActionResult Create()
         {
-            ViewData["ComunaId"] = new SelectList(_context.Set<Comuna>(), "Id", "Id");
+            ViewData["CommuneId"] = new SelectList(_context.Set<Commune>(), "Id", "Id");
             return View();
         }
 
@@ -85,7 +85,7 @@ namespace MaReB.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ComunaId,Date,Species,Kg,Caleta")] Arrival arrival)
+        public async Task<IActionResult> Create([Bind("Id,CommuneId,Date,Species,Kg,Caleta")] Arrival arrival)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace MaReB.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ComunaId"] = new SelectList(_context.Set<Comuna>(), "Id", "Id", arrival.ComunaId);
+            ViewData["CommuneId"] = new SelectList(_context.Set<Commune>(), "Id", "Id", arrival.CommuneId);
             return View(arrival);
         }
 
@@ -105,12 +105,12 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var arrival = await _context.Arrival.SingleOrDefaultAsync(m => m.Id == id);
+            var arrival = await _context.Arrivals.SingleOrDefaultAsync(m => m.Id == id);
             if (arrival == null)
             {
                 return NotFound();
             }
-            ViewData["ComunaId"] = new SelectList(_context.Set<Comuna>(), "Id", "Id", arrival.ComunaId);
+            ViewData["CommuneId"] = new SelectList(_context.Set<Commune>(), "Id", "Id", arrival.CommuneId);
             return View(arrival);
         }
 
@@ -119,7 +119,7 @@ namespace MaReB.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ComunaId,Date,Species,Kg,Caleta")] Arrival arrival)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CommuneId,Date,Species,Kg,Caleta")] Arrival arrival)
         {
             if (id != arrival.Id)
             {
@@ -146,7 +146,7 @@ namespace MaReB.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ComunaId"] = new SelectList(_context.Set<Comuna>(), "Id", "Id", arrival.ComunaId);
+            ViewData["CommuneId"] = new SelectList(_context.Set<Commune>(), "Id", "Id", arrival.CommuneId);
             return View(arrival);
         }
 
@@ -158,8 +158,8 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var arrival = await _context.Arrival
-                .Include(a => a.Comuna)
+            var arrival = await _context.Arrivals
+                .Include(a => a.Commune)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (arrival == null)
             {
@@ -174,15 +174,15 @@ namespace MaReB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var arrival = await _context.Arrival.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Arrival.Remove(arrival);
+            var arrival = await _context.Arrivals.SingleOrDefaultAsync(m => m.Id == id);
+            _context.Arrivals.Remove(arrival);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ArrivalExists(int id)
         {
-            return _context.Arrival.Any(e => e.Id == id);
+            return _context.Arrivals.Any(e => e.Id == id);
         }
     }
 }

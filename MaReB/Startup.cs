@@ -48,6 +48,9 @@ namespace MaReB
                 options.UseSqlServer(
                     Configuration.GetConnectionString(os + "Connection")));
 
+            services.AddHostedService<SeedBackground>();
+            services.AddScoped<ISeed, SeedService>();
+
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()

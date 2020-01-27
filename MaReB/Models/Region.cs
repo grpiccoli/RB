@@ -24,7 +24,7 @@ namespace MaReB.Models
 
         public string MapCode { get; set; }
 
-        public ICollection<Provincia> Provincias { get; set; }
+        public ICollection<Province> Provinces { get; set; }
         public ICollection<Station> Stations { get; set; }
         public ICollection<Coordinate> Coordinates { get; set; }
         public ICollection<Export> Exports { get; set; }

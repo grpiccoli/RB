@@ -24,7 +24,7 @@ namespace MaReB.Controllers
         // GET: Exports
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Export
+            var applicationDbContext = _context.Exports
                 .Include(e => e.Country)
                 .Include(e => e.Region);
             return View(await applicationDbContext.ToListAsync());
@@ -34,7 +34,7 @@ namespace MaReB.Controllers
         // GET: Exports
         public async Task<IActionResult> Summary()
         {
-            var applicationDbContext = _context.Export;
+            var applicationDbContext = _context.Exports;
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -46,7 +46,7 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var export = await _context.Export
+            var export = await _context.Exports
                 .Include(e => e.Country)
                 .Include(e => e.Region)
                 .SingleOrDefaultAsync(m => m.Id == id);
@@ -92,7 +92,7 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var export = await _context.Export.SingleOrDefaultAsync(m => m.Id == id);
+            var export = await _context.Exports.SingleOrDefaultAsync(m => m.Id == id);
             if (export == null)
             {
                 return NotFound();
@@ -147,7 +147,7 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var export = await _context.Export
+            var export = await _context.Exports
                 .Include(e => e.Country)
                 .Include(e => e.Region)
                 .SingleOrDefaultAsync(m => m.Id == id);
@@ -164,15 +164,15 @@ namespace MaReB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var export = await _context.Export.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Export.Remove(export);
+            var export = await _context.Exports.SingleOrDefaultAsync(m => m.Id == id);
+            _context.Exports.Remove(export);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ExportExists(int id)
         {
-            return _context.Export.Any(e => e.Id == id);
+            return _context.Exports.Any(e => e.Id == id);
         }
     }
 }
