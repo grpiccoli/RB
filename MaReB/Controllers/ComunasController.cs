@@ -25,7 +25,7 @@ namespace MaReB.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Communes.Include(c => c.Province);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await applicationDbContext.ToListAsync().ConfigureAwait(false));
         }
 
         // GET: Comunas/Details/5
@@ -38,7 +38,7 @@ namespace MaReB.Controllers
 
             var commune = await _context.Communes
                 .Include(c => c.Province)
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.Id == id).ConfigureAwait(false);
             if (commune == null)
             {
                 return NotFound();
@@ -64,7 +64,7 @@ namespace MaReB.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(commune);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync().ConfigureAwait(false);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProvinceId"] = new SelectList(_context.Provinces, "Id", "Id", commune.ProvinceId);
@@ -79,7 +79,7 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var commune = await _context.Communes.SingleOrDefaultAsync(m => m.Id == id);
+            var commune = await _context.Communes.SingleOrDefaultAsync(m => m.Id == id).ConfigureAwait(false);
             if (commune == null)
             {
                 return NotFound();
@@ -105,7 +105,7 @@ namespace MaReB.Controllers
                 try
                 {
                     _context.Update(commune);
-                    await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync().ConfigureAwait(false);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -134,7 +134,7 @@ namespace MaReB.Controllers
 
             var commune = await _context.Communes
                 .Include(c => c.Province)
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.Id == id).ConfigureAwait(false);
             if (commune == null)
             {
                 return NotFound();
@@ -148,9 +148,9 @@ namespace MaReB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var commune = await _context.Communes.SingleOrDefaultAsync(m => m.Id == id);
+            var commune = await _context.Communes.SingleOrDefaultAsync(m => m.Id == id).ConfigureAwait(false);
             _context.Communes.Remove(commune);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
             return RedirectToAction(nameof(Index));
         }
 

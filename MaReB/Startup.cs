@@ -20,19 +20,27 @@ using System.Linq;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Routing;
 using AspNetCore.IServiceCollection.AddIUrlHelper;
+using Microsoft.Extensions.Hosting;
 
 namespace MaReB
 {
     public class Startup
     {
+        private readonly string _os;
+        private const string defaultCulture = "en";
+        private readonly CultureInfo[] supportedCultures;
         public Startup(IConfiguration configuration)
         {
+            supportedCultures = new[]
+                {
+                    new CultureInfo(defaultCulture),
+                    new CultureInfo("es")
+                };
             Configuration = configuration;
+            _os = Environment.OSVersion.Platform.ToString();
         }
 
         public IConfiguration Configuration { get; }
-
-        public string os = Environment.OSVersion.Platform.ToString();
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -44,9 +52,18 @@ namespace MaReB
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new RequestCulture(defaultCulture);
+                // Formatting numbers, dates, etc.
+                options.SupportedCultures = supportedCultures;
+                // UI strings that we have localized.
+                options.SupportedUICultures = supportedCultures;
+            });
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString(os + "Connection")));
+                    Configuration.GetConnectionString($"{_os}Connection")));
 
             services.AddHostedService<SeedBackground>();
             services.AddScoped<ISeed, SeedService>();
@@ -136,7 +153,7 @@ namespace MaReB
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .SetCompatibilityVersion(CompatibilityVersion.Latest)
                 .AddViewLocalization()
                 .AddDataAnnotationsLocalization();
 
@@ -155,26 +172,10 @@ namespace MaReB
             //    options.HttpsPort = 443;
             //});
 
-            services.AddNodeServices(o =>
-            {
-                o.ProjectPath = "./";
-            });
-
-            services.Configure<RequestLocalizationOptions>(
-                opts =>
-                {
-                    var supportedCultures = new List<CultureInfo>
-                    {
-                        new CultureInfo("en"),
-                        new CultureInfo("es"),
-                    };
-
-                    opts.DefaultRequestCulture = new RequestCulture("es");
-                    // Formatting numbers, dates, etc.
-                    opts.SupportedCultures = supportedCultures;
-                    // UI strings that we have localized.
-                    opts.SupportedUICultures = supportedCultures;
-                });
+            //services.AddNodeServices(o =>
+            //{
+            //    o.ProjectPath = "./";
+            //});
 
             services.AddUrlHelper();
 
@@ -190,40 +191,23 @@ namespace MaReB
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            if (app == null || env == null) return;
             if (env.IsDevelopment())
             {
-                //app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-                //{
-                //    ProjectPath = Path.Combine(Directory.GetCurrentDirectory(), "ClientApp"),
-                //    HotModuleReplacement = true
-                //});
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                //app.UseHsts();
+                app.UseHsts();
             }
 
-            var path = new List<string> { "lib", "cldr-data", "main" };
+            app.UseRouting();
 
-            var ch = os == "Win32NT" ? @"\" : "/";
-
-            var di = new DirectoryInfo(Path.Combine(env.WebRootPath, string.Join(ch, path)));
-            var supportedCultures = di.GetDirectories().Where(x => x.Name != "root").Select(x => new CultureInfo(x.Name)).ToList();
-            app.UseRequestLocalization(new RequestLocalizationOptions
-            {
-                DefaultRequestCulture = new RequestCulture(supportedCultures.FirstOrDefault(x => x.Name == "es-CL")),
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
-            });
-            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
-            app.UseRequestLocalization(options.Value);
-
-            //app.UseHttpsRedirection();
+            app.UseRequestLocalization(app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>().Value);
 
             app.UseStaticFiles();
 
@@ -236,11 +220,11 @@ namespace MaReB
 
             app.UseAuthentication();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

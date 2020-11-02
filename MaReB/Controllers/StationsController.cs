@@ -23,7 +23,7 @@ namespace MaReB.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Stations.Include(s => s.Region);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await applicationDbContext.ToListAsync().ConfigureAwait(false));
         }
 
         [AllowAnonymous]
@@ -65,7 +65,7 @@ namespace MaReB.Controllers
 
             var station = await _context.Stations
                 .Include(s => s.Region)
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.Id == id).ConfigureAwait(false);
             if (station == null)
             {
                 return NotFound();
@@ -91,7 +91,7 @@ namespace MaReB.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(station);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync().ConfigureAwait(false);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["RegionId"] = new SelectList(_context.Regions, "Id", "Id", station.RegionId);
@@ -175,9 +175,9 @@ namespace MaReB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var station = await _context.Stations.SingleOrDefaultAsync(m => m.Id == id);
+            var station = await _context.Stations.SingleOrDefaultAsync(m => m.Id == id).ConfigureAwait(false);
             _context.Stations.Remove(station);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
             return RedirectToAction(nameof(Index));
         }
 

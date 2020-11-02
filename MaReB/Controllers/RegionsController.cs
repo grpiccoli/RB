@@ -24,7 +24,7 @@ namespace MaReB.Controllers
         // GET: Regions
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Regions.ToListAsync());
+            return View(await _context.Regions.ToListAsync().ConfigureAwait(false));
         }
 
         [AllowAnonymous]
@@ -58,7 +58,7 @@ namespace MaReB.Controllers
             }
 
             var region = await _context.Regions
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.Id == id).ConfigureAwait(false);
             if (region == null)
             {
                 return NotFound();
@@ -83,7 +83,7 @@ namespace MaReB.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(region);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync().ConfigureAwait(false);
                 return RedirectToAction(nameof(Index));
             }
             return View(region);
@@ -97,7 +97,7 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var region = await _context.Regions.SingleOrDefaultAsync(m => m.Id == id);
+            var region = await _context.Regions.SingleOrDefaultAsync(m => m.Id == id).ConfigureAwait(false);
             if (region == null)
             {
                 return NotFound();
@@ -149,7 +149,7 @@ namespace MaReB.Controllers
             }
 
             var region = await _context.Regions
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.Id == id).ConfigureAwait(false);
             if (region == null)
             {
                 return NotFound();
@@ -163,9 +163,9 @@ namespace MaReB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var region = await _context.Regions.SingleOrDefaultAsync(m => m.Id == id);
+            var region = await _context.Regions.SingleOrDefaultAsync(m => m.Id == id).ConfigureAwait(false);
             _context.Regions.Remove(region);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
             return RedirectToAction(nameof(Index));
         }
 

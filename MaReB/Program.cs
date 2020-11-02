@@ -2,6 +2,10 @@
 using MaReB.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System.IO;
 //using Microsoft.Extensions.DependencyInjection;
 //using Microsoft.Extensions.Logging;
 //using System;
@@ -9,7 +13,7 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace MaReB
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
@@ -40,19 +44,31 @@ namespace MaReB
             //host.Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-            .UseKestrel(options =>
-            {
-                options.Limits.MaxConcurrentConnections = 100;
-                options.Limits.MaxConcurrentUpgradedConnections = 100;
-                //options.Limits.MaxRequestBodySize = 20_000_000;
-                //options.Limits.MinRequestBodyDataRate =
-                //    new MinDataRate(bytesPerSecond: 100, gracePeriod: TimeSpan.FromSeconds(10));
-                //options.Limits.MinResponseDataRate =
-                //    new MinDataRate(bytesPerSecond: 100, gracePeriod: TimeSpan.FromSeconds(10));
-            })
-            .UseUrls("http://localhost:5007")
-            .UseStartup<Startup>();
+        public static IHostBuilder CreateWebHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+                webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    config
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                    .AddEnvironmentVariables();
+                })
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddConsole();
+                }).ConfigureKestrel(options =>
+                {
+                    options.Limits.MaxConcurrentConnections = 100;
+                    options.Limits.MaxConcurrentUpgradedConnections = 100;
+                    //options.Limits.MaxRequestBodySize = 20_000_000;
+                    //options.Limits.MinRequestBodyDataRate =
+                    //    new MinDataRate(bytesPerSecond: 100, gracePeriod: TimeSpan.FromSeconds(10));
+                    //options.Limits.MinResponseDataRate =
+                    //    new MinDataRate(bytesPerSecond: 100, gracePeriod: TimeSpan.FromSeconds(10));
+                })
+                .UseUrls("http://localhost:5007")
+                .UseStartup<Startup>());
     }
 }

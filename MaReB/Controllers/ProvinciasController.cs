@@ -38,7 +38,7 @@ namespace MaReB.Controllers
 
             var provincia = await _context.Provinces
                 .Include(p => p.Region)
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.Id == id).ConfigureAwait(false);
             if (provincia == null)
             {
                 return NotFound();
@@ -64,7 +64,7 @@ namespace MaReB.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(province);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync().ConfigureAwait(false);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["RegionId"] = new SelectList(_context.Regions, "Id", "Id", province.RegionId);
@@ -79,7 +79,7 @@ namespace MaReB.Controllers
                 return NotFound();
             }
 
-            var province = await _context.Provinces.SingleOrDefaultAsync(m => m.Id == id);
+            var province = await _context.Provinces.SingleOrDefaultAsync(m => m.Id == id).ConfigureAwait(false);
             if (province == null)
             {
                 return NotFound();
@@ -134,7 +134,7 @@ namespace MaReB.Controllers
 
             var province = await _context.Provinces
                 .Include(p => p.Region)
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.Id == id).ConfigureAwait(false);
             if (province == null)
             {
                 return NotFound();

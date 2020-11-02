@@ -15,28 +15,34 @@ namespace MaReB.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
+                .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("MaReB.Models.ApplicationRole", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedDate");
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IPAddress");
+                    b.Property<string>("IPAddress")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -52,43 +58,59 @@ namespace MaReB.Migrations
             modelBuilder.Entity("MaReB.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("AccessFailedCount");
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<bool>("EmailConfirmed");
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("LockoutEnabled");
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
 
-                    b.Property<DateTimeOffset?>("LockoutEnd");
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<string>("PasswordHash");
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber");
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("PhoneNumberConfirmed");
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("ProfileImageUrl");
+                    b.Property<string>("ProfileImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SecurityStamp");
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("TwoFactorEnabled");
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -108,17 +130,23 @@ namespace MaReB.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Caleta");
+                    b.Property<string>("Caleta")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CommuneId");
+                    b.Property<int>("CommuneId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("Date");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("Kg");
+                    b.Property<int>("Kg")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Species");
+                    b.Property<int>("Species")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -131,27 +159,38 @@ namespace MaReB.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Cantidad");
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Destino");
+                    b.Property<int>("Destino")
+                        .HasColumnType("int");
 
-                    b.Property<int>("EmbarcacionId");
+                    b.Property<int>("EmbarcacionId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("Fecha");
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("Horas_Buceo");
+                    b.Property<int>("Horas_Buceo")
+                        .HasColumnType("int");
 
-                    b.Property<int>("N_Buzos");
+                    b.Property<int>("N_Buzos")
+                        .HasColumnType("int");
 
-                    b.Property<int>("OriginId");
+                    b.Property<int>("OriginId")
+                        .HasColumnType("int");
 
-                    b.Property<int?>("OriginId1");
+                    b.Property<int?>("OriginId1")
+                        .HasColumnType("int");
 
-                    b.Property<int>("PortId");
+                    b.Property<int>("PortId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Precio");
+                    b.Property<int>("Precio")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -166,15 +205,20 @@ namespace MaReB.Migrations
 
             modelBuilder.Entity("MaReB.Models.Commune", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
-                    b.Property<int>("CS");
+                    b.Property<int>("CS")
+                        .HasColumnType("int");
 
-                    b.Property<int>("DE");
+                    b.Property<int>("DE")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProvinceId");
+                    b.Property<int>("ProvinceId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -185,15 +229,20 @@ namespace MaReB.Migrations
 
             modelBuilder.Entity("MaReB.Models.Continent", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
-                    b.Property<string>("ISO");
+                    b.Property<string>("ISO")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Latitude");
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float");
 
-                    b.Property<double>("Longitude");
+                    b.Property<double>("Longitude")
+                        .HasColumnType("float");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -204,25 +253,35 @@ namespace MaReB.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CommuneId");
+                    b.Property<int?>("CommuneId")
+                        .HasColumnType("int");
 
-                    b.Property<int?>("CountryId");
+                    b.Property<int?>("CountryId")
+                        .HasColumnType("int");
 
-                    b.Property<double>("Latitude");
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float");
 
-                    b.Property<double>("Longitude");
+                    b.Property<double>("Longitude")
+                        .HasColumnType("float");
 
-                    b.Property<int?>("OriginId");
+                    b.Property<int?>("OriginId")
+                        .HasColumnType("int");
 
-                    b.Property<int?>("ProvinceId");
+                    b.Property<int?>("ProvinceId")
+                        .HasColumnType("int");
 
-                    b.Property<int?>("RegionId");
+                    b.Property<int?>("RegionId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("StationId");
+                    b.Property<string>("StationId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Vertex");
+                    b.Property<int>("Vertex")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -245,21 +304,29 @@ namespace MaReB.Migrations
 
             modelBuilder.Entity("MaReB.Models.Country", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Capital");
+                    b.Property<string>("Capital")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ContinentId");
+                    b.Property<int>("ContinentId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("ISO2");
+                    b.Property<string>("ISO2")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ISO3");
+                    b.Property<string>("ISO3")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Latitude");
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float");
 
-                    b.Property<double>("Longitude");
+                    b.Property<double>("Longitude")
+                        .HasColumnType("float");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -272,21 +339,29 @@ namespace MaReB.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CountryId");
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("Date");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("FOB");
+                    b.Property<int>("FOB")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Kg");
+                    b.Property<int>("Kg")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Processing");
+                    b.Property<int>("Processing")
+                        .HasColumnType("int");
 
-                    b.Property<int>("RegionId");
+                    b.Property<int>("RegionId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Species");
+                    b.Property<int>("Species")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -299,13 +374,17 @@ namespace MaReB.Migrations
 
             modelBuilder.Entity("MaReB.Models.Origin", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Observaciones");
+                    b.Property<string>("Observaciones")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RegionId");
+                    b.Property<int>("RegionId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -316,11 +395,14 @@ namespace MaReB.Migrations
 
             modelBuilder.Entity("MaReB.Models.Port", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
-                    b.Property<int>("CommuneId");
+                    b.Property<int>("CommuneId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -331,15 +413,20 @@ namespace MaReB.Migrations
 
             modelBuilder.Entity("MaReB.Models.Province", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Population");
+                    b.Property<int>("Population")
+                        .HasColumnType("int");
 
-                    b.Property<int>("RegionId");
+                    b.Property<int>("RegionId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Surface");
+                    b.Property<int>("Surface")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -350,17 +437,23 @@ namespace MaReB.Migrations
 
             modelBuilder.Entity("MaReB.Models.Region", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
-                    b.Property<string>("MapCode");
+                    b.Property<string>("MapCode")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Pop2002");
+                    b.Property<int>("Pop2002")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Pop2010");
+                    b.Property<int>("Pop2010")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Surface");
+                    b.Property<int>("Surface")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -369,13 +462,17 @@ namespace MaReB.Migrations
 
             modelBuilder.Entity("MaReB.Models.Station", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Area");
+                    b.Property<string>("Area")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RegionId");
+                    b.Property<int>("RegionId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -388,14 +485,18 @@ namespace MaReB.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ClaimType");
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ClaimValue");
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoleId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -408,16 +509,21 @@ namespace MaReB.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ApplicationRoleId");
+                    b.Property<string>("ApplicationRoleId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ClaimType");
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ClaimValue");
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -430,14 +536,18 @@ namespace MaReB.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ProviderKey");
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ProviderDisplayName");
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -448,12 +558,15 @@ namespace MaReB.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("RoleId");
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Discriminator")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -466,13 +579,17 @@ namespace MaReB.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Value");
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
@@ -483,7 +600,8 @@ namespace MaReB.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<string>");
 
-                    b.Property<string>("RoleAssigner");
+                    b.Property<string>("RoleAssigner")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("ApplicationUserRole");
                 });
@@ -493,15 +611,17 @@ namespace MaReB.Migrations
                     b.HasOne("MaReB.Models.Commune", "Commune")
                         .WithMany("Arrivals")
                         .HasForeignKey("CommuneId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MaReB.Models.Capture", b =>
                 {
-                    b.HasOne("MaReB.Models.Origin")
+                    b.HasOne("MaReB.Models.Origin", null)
                         .WithMany("Captures")
                         .HasForeignKey("OriginId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MaReB.Models.Origin", "Origin")
                         .WithMany()
@@ -510,7 +630,8 @@ namespace MaReB.Migrations
                     b.HasOne("MaReB.Models.Port", "Port")
                         .WithMany()
                         .HasForeignKey("PortId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MaReB.Models.Commune", b =>
@@ -518,7 +639,8 @@ namespace MaReB.Migrations
                     b.HasOne("MaReB.Models.Province", "Province")
                         .WithMany("Communes")
                         .HasForeignKey("ProvinceId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MaReB.Models.Coordinate", b =>
@@ -553,7 +675,8 @@ namespace MaReB.Migrations
                     b.HasOne("MaReB.Models.Continent", "Continent")
                         .WithMany("Countries")
                         .HasForeignKey("ContinentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MaReB.Models.Export", b =>
@@ -561,12 +684,14 @@ namespace MaReB.Migrations
                     b.HasOne("MaReB.Models.Country", "Country")
                         .WithMany("Exports")
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("MaReB.Models.Region", "Region")
                         .WithMany("Exports")
                         .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MaReB.Models.Origin", b =>
@@ -574,7 +699,8 @@ namespace MaReB.Migrations
                     b.HasOne("MaReB.Models.Region", "Region")
                         .WithMany()
                         .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MaReB.Models.Port", b =>
@@ -582,7 +708,8 @@ namespace MaReB.Migrations
                     b.HasOne("MaReB.Models.Commune", "Commune")
                         .WithMany("Ports")
                         .HasForeignKey("CommuneId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MaReB.Models.Province", b =>
@@ -590,7 +717,8 @@ namespace MaReB.Migrations
                     b.HasOne("MaReB.Models.Region", "Region")
                         .WithMany("Provinces")
                         .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MaReB.Models.Station", b =>
@@ -598,56 +726,63 @@ namespace MaReB.Migrations
                     b.HasOne("MaReB.Models.Region", "Region")
                         .WithMany("Stations")
                         .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("MaReB.Models.ApplicationRole")
+                    b.HasOne("MaReB.Models.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("MaReB.Models.ApplicationRole")
+                    b.HasOne("MaReB.Models.ApplicationRole", null)
                         .WithMany("Claims")
                         .HasForeignKey("ApplicationRoleId");
 
-                    b.HasOne("MaReB.Models.ApplicationUser")
+                    b.HasOne("MaReB.Models.ApplicationUser", null)
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("MaReB.Models.ApplicationUser")
+                    b.HasOne("MaReB.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("MaReB.Models.ApplicationRole")
+                    b.HasOne("MaReB.Models.ApplicationRole", null)
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("MaReB.Models.ApplicationUser")
+                    b.HasOne("MaReB.Models.ApplicationUser", null)
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("MaReB.Models.ApplicationUser")
+                    b.HasOne("MaReB.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -12,6 +12,7 @@ using Pluralize.NET.Core;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace MaReB.Services
         private readonly ILogger _logger;
         private readonly IStringLocalizer _localizer;
         public IConfiguration Configuration { get; }
-        private readonly IHostingEnvironment _environment;
+        private readonly IWebHostEnvironment _environment;
         private readonly string _os;
         private readonly string _conn;
         private readonly ApplicationDbContext _context;
@@ -31,7 +32,7 @@ namespace MaReB.Services
             ILogger<SeedService> logger,
             IStringLocalizer<SeedService> localizer,
             IConfiguration configuration,
-            IHostingEnvironment environment,
+            IWebHostEnvironment environment,
             ApplicationDbContext context
             //IUser user
             //Bulk bulk
@@ -51,10 +52,12 @@ namespace MaReB.Services
         {
             try
             {
-                await AddProcedure().ConfigureAwait(false);
-                var tsvPath = Path.Combine(_environment.ContentRootPath, "Data");
                 if (!_context.ApplicationUsers.Any())
                     await User().ConfigureAwait(false);
+                await AddProcedures().ConfigureAwait(false);
+
+                var tsvPath = Path.Combine(_environment.ContentRootPath, "Data");
+
                 if (!_context.Continents.Any())
                     await Insert<Continent>(tsvPath).ConfigureAwait(false);
                 if (!_context.Countries.Any())
@@ -91,60 +94,72 @@ namespace MaReB.Services
                 throw;
             }
         }
-        public async Task AddProcedure()
+        public async Task AddProcedures()
         {
             string query = "select * from sysobjects where type='P' and name='BulkInsert'";
             var sp = @"CREATE PROCEDURE BulkInsert(@TableName NVARCHAR(50), @Tsv NVARCHAR(100))
 AS
 BEGIN 
 DECLARE @SQLSelectQuery NVARCHAR(MAX)=''
-SET @SQLSelectQuery = 'BULK INSERT ' + @TableName + ' FROM ' + QUOTENAME(@Tsv) + ' WITH (DATAFILETYPE=''widechar'')'
+DECLARE @HasIdentity bit
+SET @SQLSelectQuery = N'SELECT @HasIdentity=OBJECTPROPERTY(OBJECT_ID('''+@TableName+'''), ''TableHasIdentity'')'
+  exec sp_executesql @SQLSelectQuery, N'@HasIdentity bit out', @HasIdentity out
+IF @HasIdentity = 1
+	BEGIN
+    SET @SQLSelectQuery = 'SET IDENTITY_INSERT '+@TableName+' ON'
+	exec(@SQLSelectQuery)
+	END
+SET @SQLSelectQuery = 'BULK INSERT ' + @TableName + ' FROM ' + QUOTENAME(@Tsv) + ' WITH (KEEPIDENTITY, DATAFILETYPE=''widechar'')'
   exec(@SQLSelectQuery)
+IF @HasIdentity = 1
+	BEGIN
+    SET @SQLSelectQuery = 'SET IDENTITY_INSERT '+@TableName+' OFF'
+	exec(@SQLSelectQuery)
+	END
 END";
             bool spExists = false;
-            using (SqlConnection connection = new SqlConnection(_conn))
+            using SqlConnection connection = new SqlConnection(_conn);
+            using SqlCommand command = new SqlCommand
             {
-                using (SqlCommand command = new SqlCommand())
+                Connection = connection,
+                CommandText = query
+            };
+            connection.Open();
+            using (SqlDataReader reader = await command.ExecuteReaderAsync().ConfigureAwait(false))
+            {
+                while (await reader.ReadAsync().ConfigureAwait(false))
                 {
-                    command.Connection = connection;
-                    command.CommandText = query;
-                    connection.Open();
-                    using (SqlDataReader reader = await command.ExecuteReaderAsync().ConfigureAwait(false))
-                    {
-                        while (await reader.ReadAsync().ConfigureAwait(false))
-                        {
-                            spExists = true;
-                            break;
-                        }
-                    }
-                    if (!spExists)
-                    {
-                        command.CommandText = sp;
-                        using (SqlDataReader reader = await command.ExecuteReaderAsync().ConfigureAwait(false))
-                        {
-                            while (await reader.ReadAsync().ConfigureAwait(false))
-                            {
-                                spExists = true;
-                                break;
-                            }
-                        }
-                    }
-                    connection.Close();
+                    spExists = true;
+                    break;
                 }
             }
+            if (!spExists)
+            {
+                command.CommandText = sp;
+                using SqlDataReader reader = await command.ExecuteReaderAsync().ConfigureAwait(false);
+                while (await reader.ReadAsync().ConfigureAwait(false))
+                {
+                    spExists = true;
+                    break;
+                }
+            }
+            connection.Close();
         }
-        public async Task Insert<TSource>(string path)
+        public async Task Insert<TEntity>(string path) where TEntity : class
         {
-            var name = new Pluralizer().Pluralize(typeof(TSource).ToString().Split(".").Last());
+            var type = typeof(TEntity);
+            var name = new Pluralizer().Pluralize(type.Name);
             _context.Database.SetCommandTimeout(10000);
-            var tableName = $"dbo.{name}";
             var tsv = Path.Combine(path, $"{name}.tsv");
             var tmp = Path.Combine(Path.GetTempPath(), $"{name}.tsv");
+            if (!File.Exists(tsv)) return;
             File.Copy(tsv, tmp, true);
+            var dbo = $"dbo.{name}";
             await _context.Database
-                .ExecuteSqlCommandAsync($"BulkInsert @p0, @p1;", tableName, tmp)
+                .ExecuteSqlInterpolatedAsync($"BulkInsert {dbo}, {tmp}")
                 .ConfigureAwait(false);
             File.Delete(tmp);
+            Console.WriteLine($"{name} saved to Database");
             return;
         }
         public async Task User()

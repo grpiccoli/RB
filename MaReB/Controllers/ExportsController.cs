@@ -164,9 +164,9 @@ namespace MaReB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var export = await _context.Exports.SingleOrDefaultAsync(m => m.Id == id);
+            var export = await _context.Exports.SingleOrDefaultAsync(m => m.Id == id).ConfigureAwait(false);
             _context.Exports.Remove(export);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
             return RedirectToAction(nameof(Index));
         }
 

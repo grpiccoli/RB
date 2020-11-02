@@ -26,7 +26,7 @@ namespace MaReB.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Countries;
-            return View(await applicationDbContext.ToListAsync());
+            return View(await applicationDbContext.ToListAsync().ConfigureAwait(false));
         }
 
         [AllowAnonymous]
@@ -253,9 +253,9 @@ namespace MaReB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var country = await _context.Countries.SingleOrDefaultAsync(m => m.Id == id);
+            var country = await _context.Countries.SingleOrDefaultAsync(m => m.Id == id).ConfigureAwait(false);
             _context.Countries.Remove(country);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
             return RedirectToAction(nameof(Index));
         }
 
